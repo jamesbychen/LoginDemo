@@ -125,28 +125,43 @@
     <script>
         $(document).ready(function () {
             $('#result').hide();
+            $('#btnLogin').click(function () {
+                username = $('#username').val();
+                password = $('#password').val();
+                //alert("username=" + username + "&password=" + password);
+                $.ajax({
+                    type: "GET",
+                    url: "checkLogin.aspx",
+                    data: {
+                        username: username,
+                        password: password
+                    },
+                    success: function (data) {
+                        $('#result').html(data);
+                        $('#result').show();
+                        $('#loginpage').hide();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.responseText);
+                    }
+                });
+                return false;
+            });
         });
 
     </script>
 </head>
 <body>
-    <div class="login-page">
+    <div id="loginpage" class="login-page">
         <div class="form">
-            <form class="register-form" id="form1" runat="server">
-                <input type="text" placeholder="name" />
-                <input type="password" placeholder="password" />
-                <input type="text" placeholder="email address" />
-                <button>create</button>
-                <p class="message">Already registered? <a href="#">Sign In</a></p>
-            </form>
             <form class="login-form">
-                <input type="text" placeholder="username" />
-                <input type="password" placeholder="password" />
-                <button>login</button>
+                <input type="text" placeholder="user name" id="username" />
+                <input type="password" id="password" placeholder="password" />
+                <button id="btnLogin">login</button>
                 <p class="message">Not registered? <a href="#">Create an account</a></p>
             </form>
         </div>
     </div>
-    <div id="result" class="message"></div>
+    <div id="result" class="form"></div>
 </body>
 </html>

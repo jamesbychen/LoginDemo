@@ -7,11 +7,12 @@ using System.Web.Http;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Login_Demostration2.Models
+namespace Login_Demostration2.Controllers
 {
     public class PublicFunctionController : ApiController
     {
         SQLConnectionController scc = new SQLConnectionController();
+        //取得密碼(with MD5)
         public string getPassword(string name)
         {
             //取出使用者的密碼
@@ -28,6 +29,20 @@ namespace Login_Demostration2.Models
             return result;
         }
 
-
+        //取得IP
+        public string getClientIP()
+        {
+            System.Web.HttpContext context = System.Web.HttpContext.Current;
+            string sIPAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (string.IsNullOrEmpty(sIPAddress))
+            {
+                return context.Request.ServerVariables["REMOTE_ADDR"];
+            }
+            else
+            {
+                string[] ipArray = sIPAddress.Split(new Char[] { ',' });
+                return ipArray[0];
+            }
+        }
     }
 }

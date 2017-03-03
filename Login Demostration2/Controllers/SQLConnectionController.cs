@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Login_Demostration2.Models
+namespace Login_Demostration2.Controllers
 {
     public class SQLConnectionController : Controller
     {
